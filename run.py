@@ -2,8 +2,7 @@ from dash import dcc, html
 from dash.dependencies import Input, Output
 
 from app import app
-from layouts import index
-from examples.run import callback_example
+from layouts import index, intro
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
@@ -11,14 +10,13 @@ app.layout = html.Div([
 
 ])
 
-
 @app.callback(Output('page-content', 'children'),
               Input('url', 'pathname'))
 def display_page(pathname):
     if pathname == '/':
         return index.layout
-    elif pathname.startswith('/examples/'):
-        return callback_example(pathname)
+    if pathname == '/examples/intro':
+        return intro.layout
     # else:
     #     return '404'
 
